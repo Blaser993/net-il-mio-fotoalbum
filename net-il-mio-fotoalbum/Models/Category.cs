@@ -8,7 +8,7 @@ namespace net_il_mio_fotoalbum.Models
         public int CategoryId { get; set; }
         public string Name { get; set; }
 
-        public List<Foto>? fotos { get; set; }
+        public List<Foto>? Fotos { get; set; }
 
 
         public Category() { }
