@@ -51,7 +51,78 @@ namespace net_il_mio_fotoalbum.Controllers
             return View("Create");
         }
 
-        
+        [HttpGet]
+        public IActionResult Update(int id)
+        {
+            using (FotoContext db = new FotoContext())
+            {
+                Foto fotoToEdit = db.Fotos.Where(foto => foto.FotoId == id).FirstOrDefault();
+
+                if (fotoToEdit == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    return View(fotoToEdit);
+                }
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(int id, Foto foto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("Update", foto);
+            }
+
+            using (FotoContext db = new FotoContext())
+            {
+                Foto fotoToUpdate = db.Fotos.Where(foto => foto.FotoId == id).FirstOrDefault();
+
+                if(fotoToUpdate != null)
+                {
+                    fotoToUpdate.Title = foto.Title;
+                    fotoToUpdate.Image = foto.Image;
+                    fotoToUpdate.Description = foto.Description;
+                    fotoToUpdate.Visibility = foto.Visibility;
+                    fotoToUpdate.Categories = foto.Categories;
+
+                    db.SaveChanges();
+
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id)
+        {
+            using (FotoContext db = new FotoContext())
+            {
+                Foto fotoToDelete = db.Fotos.Where(foto => foto.FotoId == id).FirstOrDefault();
+
+                if(fotoToDelete != null)
+                {
+                    db.Fotos.Remove(fotoToDelete);
+
+                    db.SaveChanges();
+
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+        }
 
     }
 }
