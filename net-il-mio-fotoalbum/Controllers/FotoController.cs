@@ -9,14 +9,22 @@ namespace net_il_mio_fotoalbum.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View("index");
+            using(FotoContext db = new FotoContext())
+            {
+
+                List<Foto> fotos = db.Fotos.ToList<Foto>();
+
+
+                return View("index", fotos);
+
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Foto foto)
         { 
-            if(ModelState.IsValid)
+            if(!ModelState.IsValid)
             {
                 return View("Create", foto);
             }
@@ -25,6 +33,7 @@ namespace net_il_mio_fotoalbum.Controllers
             {
                 Foto fotoToCreate = new Foto();
                 fotoToCreate.Title = foto.Title;
+                fotoToCreate.Image = foto.Image;
                 fotoToCreate.Description = foto.Description;
                 fotoToCreate.Visibility = foto.Visibility;
                 fotoToCreate.Categories= foto.Categories;
@@ -41,5 +50,8 @@ namespace net_il_mio_fotoalbum.Controllers
         {
             return View("Create");
         }
+
+        
+
     }
 }
