@@ -1,0 +1,71 @@
+﻿
+@model List<Foto>
+
+<h2>Le mie Foto</h2>
+
+    <h3>Nessuna Foto disponibile</h3>
+    <a class="btn btn-primary" href="@Url.Action("Create", "Foto")"> Aggiungi una foto</a>
+
+@if (Model != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Titolo</th>
+                <th scope="col">Descrizione</th>
+                <th scope="col">Foto</th>
+                <th scope="col">Azioni</th>
+            </tr>
+        </thead>
+        <tbody>
+
+
+            @foreach (Foto foto in Model)
+            {
+                <tr>
+                    <th scope="row">@foto.FotoId</th>
+                    <td>@foto.Title</td>
+                    <td>@foto.Description</td>
+                    <td>
+                        <img class="foto" src="@foto.Image" alt="Foto della foto @foto.Title" />
+                    </td>
+                    <td>@foto.Visibility</td>
+                    <td>
+                        <a class="btn btn-info btn-sm" href="@Url.Action("Details", "Foto", new {id = foto.FotoId})">
+                            Dettagli
+                        </a>
+
+
+                        @if (User.IsInRole("ADMIN"))
+                        {
+                            <a class="btn btn-warning btn-sm my-1" href="@Url.Action("Update", "Foto", new {id = foto.FotoId})">
+                                Modifica
+                            </a>
+
+
+                            <form asp-controller="Pizza" asp-action="Delete" asp-route-id="@foto.FotoId" method="post">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    Elimina
+                                </button>
+                            </form>
+                        }
+                    </td>
+                </tr>
+            }
+
+
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Non esistono foto nel database</p>
+}
+
+
+
+<a class="btn btn-primary" href="@Url.Action("Create", "Foto")"> Aggiungi una foto</a>
+
+

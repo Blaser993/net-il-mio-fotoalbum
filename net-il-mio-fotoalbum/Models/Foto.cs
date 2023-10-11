@@ -10,6 +10,7 @@ namespace net_il_mio_fotoalbum.Models
         [Key]
         public int FotoId { get; set; }
         public string Title { get; set; }
+        public string Description { get; set; }
         public string Image { get; set; }
         public bool Visibility { get; set; }
 

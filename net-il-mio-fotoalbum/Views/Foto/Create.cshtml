@@ -1,0 +1,26 @@
+﻿@model Foto
+
+<div class="container">
+    <form asp-controller="Profile" asp-action="Create" method="post">
+        @Html.AntiForgeryToken()
+        <div class="mb-3">
+            <strong>Nome:</strong>
+            <input asp-for="Title" class="d-block w-100" />
+        </div>
+        <div class="mb-3">
+            <strong>Descrizione:</strong>
+            <input asp-for="Description" class="d-block w-100" />
+        </div>
+        <div class="mb-3">
+            <strong>Visibilità:</strong>
+            <input asp-for="Visibility" class="d-block w-100" />
+        </div>
+        <div class="mb-3">
+            <strong>Immagine:</strong>
+            <input asp-for="Image" class="d-block w-100" />
+        </div>
+        <div class="text-end">
+            <input type="submit" class="btn btn-small btn-info" value="Salva">
+        </div>
+    </form>
+</div>
