@@ -13,5 +13,10 @@ namespace net_il_mio_fotoalbum.Models
         public string Image { get; set; }
         public bool Visibility { get; set; }
 
+
+        public List<Category>? Categories { get; set; }
+
+        public Foto() { }
+
     }
 }

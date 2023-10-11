@@ -1,4 +1,6 @@
 namespace net_il_mio_fotoalbum
+
+
 {
     public class Program
     {
