@@ -12,5 +12,10 @@ namespace net_il_mio_fotoalbum.Models
 
 
         public Category() { }
+
+        public Category(string name)
+        {
+            this.Name = name;
+        }
     }
 }

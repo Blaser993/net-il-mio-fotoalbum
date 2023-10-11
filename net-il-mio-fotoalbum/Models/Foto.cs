@@ -18,5 +18,12 @@ namespace net_il_mio_fotoalbum.Models
 
         public Foto() { }
 
+        public Foto(string title, string image, bool visibility)
+        {
+            this.Title = title;
+            this.Image = image;
+            this.Visibility = true;
+        }
+
     }
 }
