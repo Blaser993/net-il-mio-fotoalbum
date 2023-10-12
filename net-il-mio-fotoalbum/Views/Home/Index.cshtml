@@ -1,8 +1,160 @@
 ﻿@{
-    Layout = "_layout";
+    Layout = "_Layout";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Le tue foto</h1>
-   
+
+
+<div class="container">
+
+
+    <div class="row">
+        <div class="col-12">
+            <h1>lista delle Foto</h1>
+            <div>
+                <input id="js_search_box" type="text" class="form-control my-3" placeholder="Cerca per nome...">
+            </div>
+        </div>
+    </div>
+
+    <div id="loading-spinner" class="row">
+        <div class="col-12">
+            <div class="spinner-border" role="status">
+            </div>
+            <span>Sto cercando le Foto disponibili...</span>
+        </div>
+    </div>
+
+
+    <div id="div-no-foto" class="row d-none">
+        <div class="col-12">
+            Nessuna foto trovata!
+        </div>
+    </div>
+
+    <div id="list-of-foto" class="row d-none">
+    </div>
+
 </div>
+
+
+@section Scripts {
+
+    <script type="text/javascript">
+
+        getAllFoto();
+
+
+
+        document.getElementById("js_search_box").addEventListener('keyup', searchFoto);
+
+
+
+
+        function searchFoto() {
+            let searchString = document.getElementById("js_search_box").value;
+
+            loadFoto(searchString);
+        }
+
+        function getAllFoto() {
+
+            axios.get('/api/Fotos/GetFotos', {
+
+            }).then((res) => {
+
+                console.log(res);
+
+                let divNoFoto = document.getElementById("div-no-foto");
+                let loadingSpinnerElement = document.getElementById("loading-spinner");
+                let listOfFotoElement = document.getElementById("list-of-foto");
+
+                if (res.data.length == 0) {
+
+                    divNoFoto.classList.remove("d-none");
+                    loadingSpinnerElement.classList.add("d-none");
+
+                } else {
+                    loadingSpinnerElement.classList.add("d-none");
+                    listOfFotoElement.classList.remove("d-none");
+
+                    listOfFotoElement.innerHTML = "";
+
+                    res.data.forEach(foto => {
+                        console.log(foto);
+
+                        listOfFotoElement.innerHTML +=
+                            `
+                                            <div class="col-12 col-md-4 p-2">
+
+                                                <div class="card post h-100">
+                                                    <img src="${foto.imageSrc}" class="card-img-top" alt="Immagine ${foto.title}">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">${foto.title}</h5>
+                                                        <p class="card-text">${foto.description}</p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            `
+
+                    });
+                }
+
+            })
+
+        }
+
+        function loadFoto(searchParam) {
+
+
+            axios.get('/api/Fotos/SearchFoto', {
+                params: {
+                    search: searchParam
+                }
+            }).then((res) => {
+
+                console.log(res);
+
+                let divNoFoto = document.getElementById("div-no-foto");
+                let loadingSpinnerElement = document.getElementById("loading-spinner");
+                let listOfFotoElement = document.getElementById("list-of-foto");
+
+                if (res.data.length == 0) {
+
+                    divNoFoto.classList.remove("d-none");
+                    loadingSpinnerElement.classList.add("d-none");
+
+                } else {
+                    loadingSpinnerElement.classList.add("d-none");
+                    listOffotoElement.classList.remove("d-none");
+
+                    listOfFotoElement.innerHTML = "";
+
+                    res.data.forEach(foto => {
+                        console.log(foto);
+
+                        listOfFotoElement.innerHTML +=
+                            `
+                            <div class="col-12 col-md-4 p-2">
+
+                                <div class="card post h-100">
+                                    <img src="${foto.title}" class="card-img-top" alt="Immagine ${foto.title}">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${foto.title}</h5>
+                                        <p class="card-text">${foto.description}</p>
+                                       
+                                    </div>
+                                </div>
+
+                            </div>
+                            `
+
+                    });
+                }
+
+            })
+        }
+
+    </script>
+
+}

@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using net_il_mio_fotoalbum.Database;
+using System.Text.Json.Serialization;
+
 namespace net_il_mio_fotoalbum
 
 
@@ -19,6 +21,11 @@ namespace net_il_mio_fotoalbum
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
+            builder.Services.AddScoped<FotoContext, FotoContext>();
 
             var app = builder.Build();
 
