@@ -30,6 +30,7 @@
                     class="form-control"
                     asp-items="@Model.Categories">
             </select>
+            <span asp-validation-for="SelectedCategoriesId" class="text-danger"></span>
         </div>
 
         <div class="text-end">
