@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using net_il_mio_fotoalbum.Database;
 
@@ -11,9 +12,10 @@ using net_il_mio_fotoalbum.Database;
 namespace net_il_mio_fotoalbum.Migrations
 {
     [DbContext(typeof(FotoContext))]
-    partial class FotoContextModelSnapshot : ModelSnapshot
+    [Migration("20231012150119_AddMessageTable")]
+    partial class AddMessageTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -283,21 +285,6 @@ namespace net_il_mio_fotoalbum.Migrations
                     b.HasKey("FotoId");
 
                     b.ToTable("Fotos");
-                });
-
-            modelBuilder.Entity("net_il_mio_fotoalbum.Models.Message", b =>
-                {
-                    b.Property<string>("Mail")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.HasKey("Mail");
-
-                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("CategoryFoto", b =>
