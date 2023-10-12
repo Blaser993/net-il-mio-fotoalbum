@@ -1,7 +1,7 @@
 ﻿@model FotoFormModel
 
 <div class="container">
-    <form asp-controller="Foto" asp-action="Create" method="post">
+    <form asp-controller="Foto" asp-action="Create" enctype="multipart/form-data" method="post">
         @Html.AntiForgeryToken()
         <div class="mb-3">
             <strong>Nome:</strong>
@@ -19,8 +19,13 @@
         </div>
         <div class="mb-3">
             <strong>Immagine:</strong>
-            <input asp-for="Foto.Image" class="d-block w-100" />
-            <span asp-validation-for="Foto.Image" class="text-danger"></span>
+            <input asp-for="Foto.ImageUrl" class="d-block w-100" />
+            <span asp-validation-for="Foto.ImageUrl" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="ImageFormFile">Image File:</label>
+            <input type="file" asp-for="ImageFormFile"/>
+            <span asp-validation-for="ImageFormFile" class="text-danger"></span>
         </div>
 
         <div class="mb-3">
@@ -30,6 +35,7 @@
                     class="form-control"
                     asp-items="@Model.Categories">
             </select>
+            <span asp-validation-for="SelectedCategoriesId" class="text-danger"></span>
         </div>
 
 

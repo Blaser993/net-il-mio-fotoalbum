@@ -17,7 +17,7 @@ namespace net_il_mio_fotoalbum.Controllers
                 List<Foto> fotos = db.Fotos.Include(foto => foto.Categories).ToList<Foto>();
 
 
-                return View("index", fotos);
+                return View("Index", fotos);
 
             }
         }
@@ -37,11 +37,13 @@ namespace net_il_mio_fotoalbum.Controllers
 
                     foreach(Category category in databaseCategories)
                     {
+
                         allCategorySelectList.Add(new SelectListItem()
-                        {
+                        {                          
                             Text = category.Name,
                             Value = category.CategoryId.ToString(),
                         });
+
                     }
                     data.Categories = allCategorySelectList;
 
@@ -65,8 +67,10 @@ namespace net_il_mio_fotoalbum.Controllers
             {
                 using (FotoContext db = new FotoContext())
                 {
+                    
                     foreach (string categorySelectedId in data.SelectedCategoriesId)
                     {
+                       
                         int intCategoriesSelectId = int.Parse(categorySelectedId);
 
                         Category? categoryInDb = db.Categories.Where(category => category.CategoryId == intCategoriesSelectId).FirstOrDefault();
@@ -74,29 +78,17 @@ namespace net_il_mio_fotoalbum.Controllers
                         if (categoryInDb != null)
                         {
                             data.Foto.Categories.Add(categoryInDb);
-                        }                           
+                        }
+                       
+                         
                     }
+
+                    this.SetImageFileFromFormFile(data);
 
                     db.Fotos.Add(data.Foto);
                     db.SaveChanges();                  
                 }                
             }
-            /*
-            using (FotoContext  db = new FotoContext())
-            {
-                Foto fotoToCreate = new Foto();
-                fotoToCreate.Title = foto.Title;
-                fotoToCreate.Image = foto.Image;
-                fotoToCreate.Description = foto.Description;
-                fotoToCreate.Visibility = foto.Visibility;
-                fotoToCreate.Categories= foto.Categories;
-
-                db.Fotos.Add(fotoToCreate);
-                db.SaveChanges();
-
-                return RedirectToAction("Index");
-            }
-            */
             return RedirectToAction("Index");
         }
 
@@ -206,7 +198,7 @@ namespace net_il_mio_fotoalbum.Controllers
                     fotoToUpdate.Categories.Clear();
 
                     fotoToUpdate.Title = data.Foto.Title;
-                    fotoToUpdate.Image = data.Foto.Image;
+                    fotoToUpdate.ImageUrl = data.Foto.ImageUrl;
                     fotoToUpdate.Description = data.Foto.Description;
                     fotoToUpdate.Visibility = data.Foto.Visibility;
 
@@ -231,6 +223,13 @@ namespace net_il_mio_fotoalbum.Controllers
                                 fotoToUpdate.Categories.Add(categoryInDb);
                             }
                         }
+                    }
+
+                    if (data.ImageFormFile != null)
+                    {
+                        MemoryStream stram = new MemoryStream();
+                        data.ImageFormFile.CopyTo(stram);
+                        fotoToUpdate.ImageFile = stram.ToArray();
                     }
 
                     db.SaveChanges();
@@ -265,6 +264,21 @@ namespace net_il_mio_fotoalbum.Controllers
                     return NotFound();
                 }
             }
+        }
+
+
+
+        private void SetImageFileFromFormFile(FotoFormModel formdata)
+        {
+            if(formdata.ImageFormFile == null)
+            {
+                return;
+            }
+
+            MemoryStream stream = new MemoryStream();
+
+            formdata.ImageFormFile.CopyTo(stream);
+            formdata.Foto.ImageFile = stream.ToArray();
         }
 
     }

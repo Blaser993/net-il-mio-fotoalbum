@@ -43,21 +43,18 @@
 
                      </td>
                     <td>
-                        <img width="200px" src="@foto.Image" alt="Foto della foto @foto.Title" />
+                        <img width="200px" src="@foto.ImageSrc" alt="Immagine della foto @foto.Title" />
                     </td>
                     <td>@foto.Visibility</td>
                     <td>
+
                         <a class="btn btn-info btn-sm" href="@Url.Action("Details", "Foto", new {id = foto.FotoId})">
                             Dettagli
                         </a>
-
-
-
                         
                         <a class="btn btn-warning btn-sm my-1" href="@Url.Action("Update", "Foto", new {id = foto.FotoId})">
                             Modifica
                         </a>
-
 
                         <form asp-controller="Foto" asp-action="Delete" asp-route-id="@foto.FotoId" method="post">
                             @Html.AntiForgeryToken()
@@ -74,7 +71,7 @@
         </tbody>
     </table>
 
-    <a class="btn btn-primary" href="@Url.Action("Create", "Foto")"> Aggiungi una foto</a>
+    <a class="btn btn-primary" href="@Url.Action("Create", "Foto")"> Aggiungi una nuova foto</a>
 }
 else
 {
