@@ -22,6 +22,7 @@ namespace net_il_mio_fotoalbum.Controllers.API
         {
 
             List<Foto> fotos = _myDb.Fotos.Include(foto => foto.Categories).ToList();
+            
             return Ok(fotos.ToList());
 
         }

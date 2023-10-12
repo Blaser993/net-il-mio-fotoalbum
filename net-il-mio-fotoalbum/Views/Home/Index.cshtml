@@ -34,6 +34,19 @@
     <div id="list-of-foto" class="row d-none">
     </div>
 
+    <form>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+    </form>
+
+
 </div>
 
 
@@ -81,20 +94,22 @@
 
                     res.data.forEach(foto => {
                         console.log(foto);
+                        if (foto.visibility == true) {
+                            listOfFotoElement.innerHTML +=
+                                `
+                                                    <div class="col-12 col-md-4 p-2">
 
-                        listOfFotoElement.innerHTML +=
-                            `
-                                            <div class="col-12 col-md-4 p-2">
+                                                        <div class="card post h-100">
+                                                            <img src="${foto.imageSrc}" class="card-img-top" alt="Immagine ${foto.title}">
+                                                            <div class="card-body">
+                                                                <h5 class="card-title">${foto.title}</h5>
+                                                            </div>
+                                                        </div>
 
-                                                <div class="card post h-100">
-                                                    <img src="${foto.imageSrc}" class="card-img-top" alt="Immagine ${foto.title}">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">${foto.title}</h5>
                                                     </div>
-                                                </div>
-
-                                            </div>
-                                            `
+                                                    `
+                        }
+                        
 
                     });
                 }
@@ -131,21 +146,23 @@
 
                     res.data.forEach(foto => {
                         console.log(foto);
+                        if (foto.visibility == true) {
+                            listOfFotoElement.innerHTML +=
+                                `
+                                    <div class="col-12 col-md-4 p-2">
 
-                        listOfFotoElement.innerHTML +=
-                            `
-                            <div class="col-12 col-md-4 p-2">
+                                        <div class="card post h-100">
+                                            <img src="${foto.imageSrc}" class="card-img-top" alt="Immagine ${foto.title}">
+                                            <div class="card-body">
+                                                <h5 class="card-title">${foto.title}</h5>
 
-                                <div class="card post h-100">
-                                    <img src="${foto.imageSrc}" class="card-img-top" alt="Immagine ${foto.title}">
-                                    <div class="card-body">
-                                        <h5 class="card-title">${foto.title}</h5>
-                                       
+                                            </div>
+                                        </div>
+
                                     </div>
-                                </div>
+                                    `
+                        }
 
-                            </div>
-                            `
 
                     });
                 }
