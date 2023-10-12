@@ -90,7 +90,6 @@
                                                     <img src="${foto.imageSrc}" class="card-img-top" alt="Immagine ${foto.title}">
                                                     <div class="card-body">
                                                         <h5 class="card-title">${foto.title}</h5>
-                                                        <p class="card-text">${foto.description}</p>
                                                     </div>
                                                 </div>
 
@@ -107,7 +106,7 @@
         function loadFoto(searchParam) {
 
 
-            axios.get('/api/Fotos/SearchFoto', {
+            axios.get('/api/Fotos/SearchFotos', {
                 params: {
                     search: searchParam
                 }
@@ -126,7 +125,7 @@
 
                 } else {
                     loadingSpinnerElement.classList.add("d-none");
-                    listOffotoElement.classList.remove("d-none");
+                    listOfFotoElement.classList.remove("d-none");
 
                     listOfFotoElement.innerHTML = "";
 
@@ -138,10 +137,9 @@
                             <div class="col-12 col-md-4 p-2">
 
                                 <div class="card post h-100">
-                                    <img src="${foto.title}" class="card-img-top" alt="Immagine ${foto.title}">
+                                    <img src="${foto.imageSrc}" class="card-img-top" alt="Immagine ${foto.title}">
                                     <div class="card-body">
                                         <h5 class="card-title">${foto.title}</h5>
-                                        <p class="card-text">${foto.description}</p>
                                        
                                     </div>
                                 </div>
