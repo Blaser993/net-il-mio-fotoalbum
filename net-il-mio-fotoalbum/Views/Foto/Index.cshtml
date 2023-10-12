@@ -18,8 +18,9 @@
                 <th scope="col">#</th>
                 <th scope="col">Titolo</th>
                 <th scope="col">Descrizione</th>
+                <th scope="col">Categorie</th>
                 <th scope="col">Foto</th>
-                <th scope="col">Visibilità</th>
+                <th scope="col">Visibilità</th>               
                 <th scope="col">Azioni</th>
             </tr>
         </thead>
@@ -32,6 +33,15 @@
                     <th scope="row">@foto.FotoId</th>
                     <td>@foto.Title</td>
                     <td>@foto.Description</td>
+                    <td>
+                        <ul>
+                            @foreach (Category category in foto.Categories)
+                            {
+                                <li>@category.Name</li>
+                            }
+                        </ul>
+
+                     </td>
                     <td>
                         <img width="200px" src="@foto.Image" alt="Foto della foto @foto.Title" />
                     </td>
