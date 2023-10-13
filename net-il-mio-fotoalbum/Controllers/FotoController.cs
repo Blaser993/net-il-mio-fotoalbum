@@ -67,6 +67,7 @@ namespace net_il_mio_fotoalbum.Controllers
 
             if(data.SelectedCategoriesId != null)
             {
+
                 using (FotoContext db = new FotoContext())
                 {
                     

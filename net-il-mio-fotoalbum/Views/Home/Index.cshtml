@@ -34,15 +34,17 @@
     <div id="list-of-foto" class="row d-none">
     </div>
 
-    <form>
+    <form id="contactForm" onsubmit="submitContactForm(event)">
         <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            <label for="emailInput" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="emailInput">
         </div>
         <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <label for="messageInput" class="form-label">Messaggio</label>
+            <textarea class="form-control" id="messageInput" rows="3"></textarea>
+        </div>
+        <div class="text-center">
+            <input type="submit" class="btn btn-small btn-info" value="Invia">
         </div>
     </form>
 
@@ -56,12 +58,7 @@
 
         getAllFoto();
 
-
-
         document.getElementById("js_search_box").addEventListener('keyup', searchFoto);
-
-
-
 
         function searchFoto() {
             let searchString = document.getElementById("js_search_box").value;
@@ -170,6 +167,31 @@
             })
         }
 
+
+        function submitContactForm(event) {
+            event.preventDefault();
+            let email = document.getElementById('emailInput').value;
+            let message = document.getElementById('messageInput').value;
+
+            console.log('Email:', email);
+            console.log('Message:', message);
+
+            let data = {
+                mail: email,
+                text: message
+            };
+
+            axios.post('/api/Messages/SendData', data)
+                .then((res) => {
+                    console.log('Risposta:', res);
+                    alert('Messaggio inviato con successo!');
+
+                })
+                .catch((error) => {
+                    debugger;
+                    console.error('Errore durante l\'invio del messaggio:', error);
+                });
+        }
     </script>
 
 }
